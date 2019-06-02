@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyLivnAvatar.h"
 
 @interface ViewController : UIViewController
 
+@property(weak) IBOutlet MyLivnAvatar *avatar;
 
 @end
 

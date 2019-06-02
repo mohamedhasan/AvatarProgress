@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "MyLivnAvatar.h"
 
 @interface ViewController ()
 
@@ -14,9 +15,10 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
   [super viewDidLoad];
-  // Do any additional setup after loading the view, typically from a nib.
+  [self.avatar loadImageWithUrl:@"https://thedcpmaster.com/wp2016/wp-content/uploads/2017/06/big-pumpkin.jpg" placeholder:@"placeHolder"];
 }
 
 
