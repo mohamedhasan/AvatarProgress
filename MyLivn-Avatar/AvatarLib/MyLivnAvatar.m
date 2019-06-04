@@ -8,6 +8,7 @@
 
 #import "MyLivnAvatar.h"
 #import "MyLivnImageLoader.h"
+#import "MyLivnCachManager.h"
 
 #define kLineWidth 1.0
 
@@ -17,7 +18,7 @@
   float _progress;
 }
 @property (nonatomic) MyLivnImageLoader *imageLoader;
-
+@property (nonatomic) NSString *url;
 @end
 
 @implementation MyLivnAvatar
@@ -33,15 +34,35 @@
 
 - (void)loadImageWithUrl:(nonnull NSString *)url placeholder:(NSString *)placeHolder
 {
+  if (!url) {
+    return;
+  }
+  self.url = url;
+  UIImage *cahedImage = [self cachedVersion];
+  if (cahedImage) {
+    self.image = cahedImage;
+    return;
+  }
   if (placeHolder) {
     UIImage *image = [UIImage imageNamed:placeHolder];
     if (image) {
       self.image = image;
     }
   }
+  self.progressLayer.hidden = NO;
   [self.imageLoader loadImage:url delegate:self];
 }
 
+- (UIImage *)cachedVersion
+{
+  NSData *data = [[MyLivnCachManager sharedInstance] cachedDataForUrl:self.url];
+  if (data) {
+    return [UIImage imageWithData:data];
+  }
+  return nil;
+}
+
+#pragma MyLivnLoadingImageProtocol methods
 - (void)dowloadProgressUpdated:(float)updatedValue
 {
   [self animateProgressFromValue:_progress to:updatedValue];
@@ -51,14 +72,22 @@
 - (void)dowloadTaskFinished:(UIImage *)image error:(NSError *)error
 {
   self.image = image;
-  [self.progressLayer removeFromSuperlayer];
+  NSData *imageData = UIImagePNGRepresentation(image);
+
+  [[MyLivnCachManager sharedInstance] cachData:imageData forURL:self.url];
+  [self hideProgress];
+}
+
+- (void)dowloadTaskStarted
+{
+  [self showProgress];
 }
 
 - (CAShapeLayer *)progressLayer
 {
   if (!_progressLayer) {
     
-    _progressLayer = [[CAShapeLayer alloc] init];
+    _progressLayer = [CAShapeLayer new];
     _progressLayer.strokeColor = [UIColor greenColor].CGColor;
     _progressLayer.fillColor = [UIColor clearColor].CGColor;
     _progressLayer.path = [self bezierPath].CGPath;
@@ -66,6 +95,7 @@
     _progressLayer.strokeStart = 0.0;
     _progressLayer.strokeEnd = 1.0;
     [self.layer addSublayer:_progressLayer];
+    
   }
   
   return _progressLayer;
@@ -91,4 +121,15 @@
   animateStrokeEnd.toValue = [NSNumber numberWithFloat:to];
   [self.progressLayer addAnimation:animateStrokeEnd forKey:@"strokeEndAnimation"];
 }
+
+- (void)showProgress
+{
+  self.progressLayer.lineWidth = kLineWidth;
+}
+
+- (void)hideProgress
+{
+  self.progressLayer.lineWidth = 0;
+}
+
 @end

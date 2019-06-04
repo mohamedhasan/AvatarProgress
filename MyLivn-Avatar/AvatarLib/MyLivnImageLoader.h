@@ -11,6 +11,7 @@
 
 @protocol MyLivnLoadingImageProtocol <NSObject>
 
+- (void)dowloadTaskStarted;
 - (void)dowloadProgressUpdated:(float)progress;
 - (void)dowloadTaskFinished:(UIImage *)image error:(NSError *)error;
 
@@ -20,7 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MyLivnImageLoader : NSObject <NSURLSessionDataDelegate, NSURLSessionTaskDelegate, NSURLSessionDelegate>
 
-- (void)loadImage:(NSString *)urlString delegate:(id)delegate;
+/*! @brief Loads Avatar from a http string (url) and uses delegate that conforms to MyLivnLoadingImageProtocol to repsond to specific events*/
+- (void)loadImage:(NSString *)urlString delegate:(id <MyLivnLoadingImageProtocol>)delegate;
 
 @end
 

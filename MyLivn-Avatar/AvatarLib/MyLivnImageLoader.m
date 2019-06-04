@@ -36,6 +36,10 @@
   _progress = 0.0f;
   _downloadSize = [response expectedContentLength];
   _imageData = [[NSMutableData alloc]init];
+  
+  if ([self.delegate respondsToSelector:@selector(dowloadTaskStarted)]) {
+    [self.delegate dowloadTaskStarted];
+  }
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data

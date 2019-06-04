@@ -17,6 +17,7 @@
 		3BA6B86D22A1CA6D00260160 /* MyLivn_AvatarUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA6B86C22A1CA6D00260160 /* MyLivn_AvatarUITests.m */; };
 		3BA6B87D22A1CAE400260160 /* MyLivnAvatar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA6B87C22A1CAE400260160 /* MyLivnAvatar.m */; };
 		3BA6B88022A1D0CA00260160 /* MyLivnImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA6B87F22A1D0CA00260160 /* MyLivnImageLoader.m */; };
+		3BA6B8EC22A6BF1600260160 /* MyLivnCachManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA6B8EB22A6BF1600260160 /* MyLivnCachManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		3BA6B87C22A1CAE400260160 /* MyLivnAvatar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyLivnAvatar.m; sourceTree = "<group>"; };
 		3BA6B87E22A1D0CA00260160 /* MyLivnImageLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyLivnImageLoader.h; sourceTree = "<group>"; };
 		3BA6B87F22A1D0CA00260160 /* MyLivnImageLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyLivnImageLoader.m; sourceTree = "<group>"; };
+		3BA6B8EA22A6BF1600260160 /* MyLivnCachManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyLivnCachManager.h; sourceTree = "<group>"; };
+		3BA6B8EB22A6BF1600260160 /* MyLivnCachManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyLivnCachManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +149,8 @@
 				3BA6B87C22A1CAE400260160 /* MyLivnAvatar.m */,
 				3BA6B87E22A1D0CA00260160 /* MyLivnImageLoader.h */,
 				3BA6B87F22A1D0CA00260160 /* MyLivnImageLoader.m */,
+				3BA6B8EA22A6BF1600260160 /* MyLivnCachManager.h */,
+				3BA6B8EB22A6BF1600260160 /* MyLivnCachManager.m */,
 			);
 			path = AvatarLib;
 			sourceTree = "<group>";
@@ -281,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BA6B84D22A1CA6C00260160 /* ViewController.m in Sources */,
+				3BA6B8EC22A6BF1600260160 /* MyLivnCachManager.m in Sources */,
 				3BA6B88022A1D0CA00260160 /* MyLivnImageLoader.m in Sources */,
 				3BA6B85822A1CA6D00260160 /* main.m in Sources */,
 				3BA6B84A22A1CA6C00260160 /* AppDelegate.m in Sources */,

@@ -12,6 +12,9 @@
 @interface ViewController : UIViewController
 
 @property(weak) IBOutlet MyLivnAvatar *avatar;
+@property(weak) IBOutlet UIButton *nextButton;
+
+- (IBAction)loadNext:(id)sender;
 
 @end
 
