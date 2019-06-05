@@ -48,7 +48,7 @@
     if (data && !error) {
       id jsonObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
       self.images = jsonObject[@"results"];
-      
+      NSLog(@"%@", self.images);
       dispatch_async(dispatch_get_main_queue(), ^{
         self.nextButton.enabled = YES;
         [self loadNext:nil];
@@ -63,7 +63,7 @@
 - (IBAction)loadNext:(id)sender
 {
   if (_currentIndex < self.images.count) {
-    NSString *url = self.images[_currentIndex][@"urls"][@"full"];
+    NSString *url = self.images[_currentIndex][@"urls"][@"small"];
     [self.avatar loadImageWithUrl:url placeholder:@"placeHolder"];
     _currentIndex ++;
   }

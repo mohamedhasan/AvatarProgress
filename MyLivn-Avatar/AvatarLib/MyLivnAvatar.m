@@ -38,18 +38,20 @@
     return;
   }
   self.url = url;
+  
   UIImage *cahedImage = [self cachedVersion];
   if (cahedImage) {
     self.image = cahedImage;
     return;
   }
+  
   if (placeHolder) {
     UIImage *image = [UIImage imageNamed:placeHolder];
     if (image) {
       self.image = image;
     }
   }
-  self.progressLayer.hidden = NO;
+  [self resetProgress];
   [self.imageLoader loadImage:url delegate:self];
 }
 
@@ -62,7 +64,7 @@
   return nil;
 }
 
-#pragma MyLivnLoadingImageProtocol methods
+#pragma mark MyLivnLoadingImageProtocol methods
 - (void)dowloadProgressUpdated:(float)updatedValue
 {
   [self animateProgressFromValue:_progress to:updatedValue];
@@ -71,11 +73,18 @@
 
 - (void)dowloadTaskFinished:(UIImage *)image error:(NSError *)error
 {
-  self.image = image;
-  NSData *imageData = UIImagePNGRepresentation(image);
-
-  [[MyLivnCachManager sharedInstance] cachData:imageData forURL:self.url];
-  [self hideProgress];
+  
+  if (error) {
+    [self showError];
+    return;
+  }
+  
+  if (image) {
+    self.image = image;
+    NSData *imageData = UIImagePNGRepresentation(image);
+    [[MyLivnCachManager sharedInstance] cachData:imageData forURL:self.url];
+    [self hideProgress];
+  }
 }
 
 - (void)dowloadTaskStarted
@@ -83,19 +92,34 @@
   [self showProgress];
 }
 
+- (UIColor *)loadingColor
+{
+  if (!_loadingColor) {
+    return [UIColor greenColor];
+  }
+  return _loadingColor;
+}
+
+- (UIColor *)errorColor
+{
+  if (!_errorColor) {
+    return [UIColor redColor];
+  }
+  return _errorColor;
+}
+
 - (CAShapeLayer *)progressLayer
 {
   if (!_progressLayer) {
     
     _progressLayer = [CAShapeLayer new];
-    _progressLayer.strokeColor = [UIColor greenColor].CGColor;
+    _progressLayer.strokeColor = self.loadingColor.CGColor;
     _progressLayer.fillColor = [UIColor clearColor].CGColor;
     _progressLayer.path = [self bezierPath].CGPath;
     _progressLayer.lineWidth = kLineWidth;
     _progressLayer.strokeStart = 0.0;
-    _progressLayer.strokeEnd = 1.0;
+    _progressLayer.strokeEnd = 0.0;
     [self.layer addSublayer:_progressLayer];
-    
   }
   
   return _progressLayer;
@@ -122,6 +146,8 @@
   [self.progressLayer addAnimation:animateStrokeEnd forKey:@"strokeEndAnimation"];
 }
 
+#pragma mark progress methods
+
 - (void)showProgress
 {
   self.progressLayer.lineWidth = kLineWidth;
@@ -130,6 +156,19 @@
 - (void)hideProgress
 {
   self.progressLayer.lineWidth = 0;
+}
+
+- (void)resetProgress
+{
+  self.progressLayer.strokeColor = self.loadingColor.CGColor;
+  self.progressLayer.strokeEnd = 0;
+}
+
+- (void)showError
+{
+  [self showProgress];
+  self.progressLayer.strokeColor = self.errorColor.CGColor;
+  self.progressLayer.strokeEnd = 1;
 }
 
 @end

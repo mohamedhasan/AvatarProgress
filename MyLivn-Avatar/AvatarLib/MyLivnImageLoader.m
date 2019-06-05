@@ -26,8 +26,8 @@
   NSURLSessionConfiguration *configObject = [NSURLSessionConfiguration defaultSessionConfiguration];
   configObject.requestCachePolicy = NSURLRequestReloadIgnoringCacheData;
   configObject.URLCache = nil;
-  NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:configObject delegate:self delegateQueue:[NSOperationQueue mainQueue]];
-  NSURLSessionDataTask *imageDownloadTask = [defaultSession dataTaskWithURL:[NSURL URLWithString:urlString]];
+  NSURLSession *session = [NSURLSession sessionWithConfiguration:configObject delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+  NSURLSessionDataTask *imageDownloadTask = [session dataTaskWithURL:[NSURL URLWithString:urlString]];
   [imageDownloadTask resume];
 }
 
@@ -40,6 +40,12 @@
   if ([self.delegate respondsToSelector:@selector(dowloadTaskStarted)]) {
     [self.delegate dowloadTaskStarted];
   }
+  
+  if (dataTask.error) {
+    if ([self.delegate respondsToSelector:@selector(dowloadTaskFinished:error:)]) {
+      [self.delegate dowloadTaskFinished:nil error:dataTask.error];
+    }
+  }
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
@@ -47,24 +53,23 @@
   [_imageData appendData:data];
   _progress = [_imageData length] / _downloadSize;
   
-  if (_progress == 1) {
-    
+  if ([self.delegate respondsToSelector:@selector(dowloadProgressUpdated:)]) {
+      [self.delegate dowloadProgressUpdated:_progress];
+  }
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
+{
+  if (error) {
+    if ([self.delegate respondsToSelector:@selector(dowloadTaskFinished:error:)]) {
+      [self.delegate dowloadTaskFinished:nil error:error];
+    }
+  }
+  else {
     UIImage *image = [UIImage imageWithData:_imageData];
     if ([self.delegate respondsToSelector:@selector(dowloadTaskFinished:error:)]) {
       [self.delegate dowloadTaskFinished:image error:nil];
     }
-  } else {
-    if ([self.delegate respondsToSelector:@selector(dowloadProgressUpdated:)]) {
-      [self.delegate dowloadProgressUpdated:_progress];
-    }
-  }
-  
-}
-
-- (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(nullable NSError *)error
-{
-  if ([self.delegate respondsToSelector:@selector(dowloadTaskFinished:error:)]) {
-    [self.delegate dowloadTaskFinished:nil error:error];
   }
 }
 @end
