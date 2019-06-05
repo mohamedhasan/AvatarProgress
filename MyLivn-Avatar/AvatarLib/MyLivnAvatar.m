@@ -10,7 +10,7 @@
 #import "MyLivnImageLoader.h"
 #import "MyLivnCachManager.h"
 
-#define kLineWidth 1.0
+#define kDefaultLineWidth 2.0
 
 @interface MyLivnAvatar ()
 {
@@ -108,6 +108,14 @@
   return _errorColor;
 }
 
+- (NSInteger)loadingWidth
+{
+  if (!_loadingWidth) {
+    return kDefaultLineWidth;
+  }
+  return _loadingWidth;
+}
+
 - (CAShapeLayer *)progressLayer
 {
   if (!_progressLayer) {
@@ -116,7 +124,7 @@
     _progressLayer.strokeColor = self.loadingColor.CGColor;
     _progressLayer.fillColor = [UIColor clearColor].CGColor;
     _progressLayer.path = [self bezierPath].CGPath;
-    _progressLayer.lineWidth = kLineWidth;
+    _progressLayer.lineWidth = self.loadingWidth;
     _progressLayer.strokeStart = 0.0;
     _progressLayer.strokeEnd = 0.0;
     [self.layer addSublayer:_progressLayer];
@@ -129,7 +137,7 @@
 {
   UIBezierPath *path = [UIBezierPath bezierPath];
   CGPoint middlePoint = CGPointMake(CGRectGetMaxX(self.bounds) / 2, CGRectGetMaxY(self.bounds) / 2);
-  CGFloat radius = (self.bounds.size.width / 2) - (kLineWidth / 2) - 2;
+  CGFloat radius = (self.bounds.size.width / 2) - (self.loadingWidth / 2) - 2;
   CGFloat startAngle = -M_PI_2;
   CGFloat endAngle = startAngle + (2 * M_PI);
   
@@ -150,7 +158,7 @@
 
 - (void)showProgress
 {
-  self.progressLayer.lineWidth = kLineWidth;
+  self.progressLayer.lineWidth = kDefaultLineWidth;
 }
 
 - (void)hideProgress

@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @brief Loads Avatar from a http string (url) placeHolder is an optional image to show while loading the actual image*/
 - (void)loadImageWithUrl:(nonnull NSString *)url placeholder:(NSString *)placeHolder;
 
+@property (nonatomic)IBInspectable NSInteger loadingWidth;
 @property (nonatomic)IBInspectable UIColor *loadingColor;
 @property (nonatomic)IBInspectable UIColor *errorColor;
 
