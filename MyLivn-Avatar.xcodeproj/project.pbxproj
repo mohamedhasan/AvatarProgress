@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B24DCDA22A89F790019322B /* MyLivnProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B24DCD922A89F790019322B /* MyLivnProgressView.m */; };
 		3BA6B84A22A1CA6C00260160 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA6B84922A1CA6C00260160 /* AppDelegate.m */; };
 		3BA6B84D22A1CA6C00260160 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA6B84C22A1CA6C00260160 /* ViewController.m */; };
 		3BA6B85022A1CA6C00260160 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BA6B84E22A1CA6C00260160 /* Main.storyboard */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B24DCD822A89F790019322B /* MyLivnProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyLivnProgressView.h; sourceTree = "<group>"; };
+		3B24DCD922A89F790019322B /* MyLivnProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyLivnProgressView.m; sourceTree = "<group>"; };
 		3BA6B84522A1CA6C00260160 /* MyLivn-Avatar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MyLivn-Avatar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BA6B84822A1CA6C00260160 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3BA6B84922A1CA6C00260160 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -147,6 +150,8 @@
 			children = (
 				3BA6B87B22A1CAE400260160 /* MyLivnAvatar.h */,
 				3BA6B87C22A1CAE400260160 /* MyLivnAvatar.m */,
+				3B24DCD822A89F790019322B /* MyLivnProgressView.h */,
+				3B24DCD922A89F790019322B /* MyLivnProgressView.m */,
 				3BA6B87E22A1D0CA00260160 /* MyLivnImageLoader.h */,
 				3BA6B87F22A1D0CA00260160 /* MyLivnImageLoader.m */,
 				3BA6B8EA22A6BF1600260160 /* MyLivnCachManager.h */,
@@ -286,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BA6B84D22A1CA6C00260160 /* ViewController.m in Sources */,
+				3B24DCDA22A89F790019322B /* MyLivnProgressView.m in Sources */,
 				3BA6B8EC22A6BF1600260160 /* MyLivnCachManager.m in Sources */,
 				3BA6B88022A1D0CA00260160 /* MyLivnImageLoader.m in Sources */,
 				3BA6B85822A1CA6D00260160 /* main.m in Sources */,

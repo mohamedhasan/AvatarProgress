@@ -8,6 +8,7 @@
 
 #import "MyLivnCachManager.h"
 #define CACH_PATH @"/cach"
+
 @implementation MyLivnCachManager
 
 + (instancetype)sharedInstance
@@ -16,7 +17,6 @@
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     sharedInstance = [[MyLivnCachManager alloc] init];
-    // Do any other initialisation stuff here
   });
   return sharedInstance;
 }
@@ -88,4 +88,5 @@
   }
   return data;
 }
+
 @end
