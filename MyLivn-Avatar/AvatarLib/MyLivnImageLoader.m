@@ -7,6 +7,7 @@
 //
 
 #import "MyLivnImageLoader.h"
+#import "MyLivnNetworkManager.h"
 
 @interface MyLivnImageLoader()
 {
@@ -23,15 +24,7 @@
 - (void)loadImage:(NSString *)urlString delegate:(id)delegate
 {
   self.delegate = delegate;
-  
-  NSString* encodedUrl = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-  
-  NSURLSessionConfiguration *configObject = [NSURLSessionConfiguration defaultSessionConfiguration];
-  configObject.requestCachePolicy = NSURLRequestReloadIgnoringCacheData;
-  configObject.URLCache = nil;
-  NSURLSession *session = [NSURLSession sessionWithConfiguration:configObject delegate:self delegateQueue:[NSOperationQueue mainQueue]];
-  NSURLSessionDataTask *imageDownloadTask = [session dataTaskWithURL:[NSURL URLWithString:encodedUrl]];
-  [imageDownloadTask resume];
+  [[MyLivnNetworkManager sharedInstance] loadFileWithUrl:urlString delegate:self];
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
