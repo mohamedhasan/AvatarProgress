@@ -13,26 +13,21 @@
 @property (nonatomic) NSString *url;
 @property (nonatomic, weak) id <NSURLSessionDelegate> delegate;
 @property (nonatomic) NSURLSessionDataTask *dataTask;
+
 @end
 
 @implementation MyLivnDataOperation
 
++ (void)load
+{
+  [super load];
+}
 - (instancetype)initWithDataUrl:(NSString *)url delegate:(id <NSURLSessionDelegate>)delegate
 {
   self = [super init];
   if (self) {
     self.url = url;
     self.delegate = delegate;
-    
-    [[NSNotificationCenter defaultCenter] addObserverForName:@"networkStatusChanged" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-      BOOL hasConnection = note.object[@"hasConnection"];
-      if (hasConnection) {
-        [self start];
-      } else {
-        [self cancel];
-      }
-      
-    }];
   }
   return self;
 }

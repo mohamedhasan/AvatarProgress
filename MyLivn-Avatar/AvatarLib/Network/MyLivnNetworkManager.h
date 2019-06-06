@@ -14,7 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 - (void)loadFileWithUrl:(NSString *)url delegate:(id <NSURLSessionDelegate>)delegate;
-- (bool)isNetworkAvailable;
 
 @end
 

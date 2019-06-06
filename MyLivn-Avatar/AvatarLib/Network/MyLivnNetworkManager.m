@@ -9,6 +9,7 @@
 #import "MyLivnNetworkManager.h"
 #import "MyLivnDataOperation.h"
 #import <SystemConfiguration/SCNetworkReachability.h>
+#import "Reachability.h"
 
 @interface MyLivnNetworkManager ()
 {
@@ -16,6 +17,7 @@
   NSTimer *_timer;
 }
 @property (nonatomic) NSOperationQueue *operationQueue;
+@property (nonatomic) Reachability *internetReachability;
 
 @end
 
@@ -36,14 +38,29 @@
   self = [super init];
   if (self) {
     self.operationQueue = [NSOperationQueue new];
-    _timer = [NSTimer scheduledTimerWithTimeInterval:2.0
-                                     target:self selector:@selector(checkNetworkChanges)
-                                   userInfo:nil
-                                    repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
-
+    
+    self.internetReachability = [Reachability reachabilityForInternetConnection];
+    [self.internetReachability startNotifier];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:kReachabilityChangedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
+      [self refreshFileOperations];
+      [self.internetReachability startNotifier];
+    }];
   }
   return self;
+}
+
+- (void)refreshFileOperations
+{
+  if (self.internetReachability.currentReachabilityStatus == NotReachable) {
+    [self.operationQueue cancelAllOperations];
+  } else {
+    for (MyLivnDataOperation *operation in self.operationQueue.operations) {
+      if (operation.cancelled) {
+        [operation start];
+      }
+    }
+  }
 }
 
 - (void)loadFileWithUrl:(NSString *)url delegate:(id <NSURLSessionDelegate>)delegate
@@ -57,27 +74,5 @@
   [self.operationQueue addOperation:operation];
 }
 
-- (void)checkNetworkChanges
-{
-  if ([self isNetworkAvailable] != _hasConnection) {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"networkStatusChanged" object:@{@"hasConnection":@([self isNetworkAvailable])}];
-  }
-  _hasConnection = [self isNetworkAvailable];
-}
-
-- (bool)isNetworkAvailable
-{
-  SCNetworkReachabilityFlags flags;
-  SCNetworkReachabilityRef address;
-  address = SCNetworkReachabilityCreateWithName(NULL, "www.apple.com" );
-  Boolean success = SCNetworkReachabilityGetFlags(address, &flags);
-  CFRelease(address);
-  
-  bool canReach = success
-  && !(flags & kSCNetworkReachabilityFlagsConnectionRequired)
-  && (flags & kSCNetworkReachabilityFlagsReachable);
-  
-  return canReach;
-}
 
 @end
