@@ -7,6 +7,8 @@
 //
 
 #import "MyLivnCachManager.h"
+#import "Utilities.h"
+
 #define CACH_PATH @"/cach"
 
 @implementation MyLivnCachManager
@@ -34,27 +36,28 @@
   return dataPath;
 }
 
-- (NSString *)timeStamp
-{
-  NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
-  return [NSString stringWithFormat:@"%f",timeStamp];
-}
-
 - (void)cachData:(NSData *)data forURL:(NSString *)url
 {
   if ([self savingConstraintsReachedByAddingData:data]) {
     return;
   }
   
-  NSString *timeStamp = self.timeStamp;
-  [[NSUserDefaults standardUserDefaults] setValue:timeStamp forKey:url];
-  [data writeToFile:[self.cachFolderPath stringByAppendingPathComponent:timeStamp] atomically:YES];
+  [[NSFileManager defaultManager] createFileAtPath:[self.cachFolderPath stringByAppendingPathComponent:[self cachedFileNameForUrl:url]]
+                                          contents:data
+                                        attributes:nil];
+}
+
+- (NSString *)cachedFileNameForUrl:(NSString *)urlString
+{
+  NSString *ext = [NSURL URLWithString:urlString].pathExtension;
+  NSString *fileName = [Utilities md5:urlString];
+  return [fileName stringByAppendingString:[NSString stringWithFormat:@".%@",ext]];
 }
 
 - (NSArray *)cachedFiles
 {
   NSError *error;
-  return [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.cachFolderPath error: &error];
+  return [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.cachFolderPath error:&error];
 }
 
 - (BOOL)savingConstraintsReachedByAddingData:(NSData *)data
@@ -66,8 +69,9 @@
   
   //Total size of savedFiles
   long totalSize = 0;
-  for(NSString *filePath in cachedFiles)
+  for(NSString *fileName in cachedFiles)
   {
+    NSString *filePath = [self.cachFolderPath stringByAppendingPathComponent:fileName];
     totalSize += [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil] fileSize];
   }
   totalSize += data.length;
@@ -80,7 +84,7 @@
 - (NSData *)cachedDataForUrl:(NSString *)url
 {
   NSData* data;
-  NSString *fileName = [[NSUserDefaults standardUserDefaults] valueForKey:url];
+  NSString *fileName = [self cachedFileNameForUrl:url];
   NSString *fullPath = [self.cachFolderPath stringByAppendingPathComponent:fileName];
   if ([[NSFileManager defaultManager] fileExistsAtPath:fullPath]) {
     NSError* error = nil;

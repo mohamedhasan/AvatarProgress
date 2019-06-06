@@ -11,6 +11,7 @@
 		3B24DCDE22A8B7EE0019322B /* MyLivnDataOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B24DCDD22A8B7EE0019322B /* MyLivnDataOperation.m */; };
 		3B24DCE122A8BA1A0019322B /* MyLivnNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B24DCE022A8BA1A0019322B /* MyLivnNetworkManager.m */; };
 		3B24DCE422A8D1860019322B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B24DCE322A8D1860019322B /* Reachability.m */; };
+		3B24DCE722A8EF080019322B /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B24DCE622A8EF080019322B /* Utilities.m */; };
 		3BA6B84A22A1CA6C00260160 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA6B84922A1CA6C00260160 /* AppDelegate.m */; };
 		3BA6B84D22A1CA6C00260160 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BA6B84C22A1CA6C00260160 /* ViewController.m */; };
 		3BA6B85022A1CA6C00260160 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BA6B84E22A1CA6C00260160 /* Main.storyboard */; };
@@ -50,6 +51,8 @@
 		3B24DCE022A8BA1A0019322B /* MyLivnNetworkManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyLivnNetworkManager.m; sourceTree = "<group>"; };
 		3B24DCE222A8D1860019322B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		3B24DCE322A8D1860019322B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		3B24DCE522A8EF080019322B /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		3B24DCE622A8EF080019322B /* Utilities.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		3BA6B84522A1CA6C00260160 /* MyLivn-Avatar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MyLivn-Avatar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BA6B84822A1CA6C00260160 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3BA6B84922A1CA6C00260160 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -179,6 +182,8 @@
 				3BA6B87F22A1D0CA00260160 /* MyLivnImageLoader.m */,
 				3BA6B8EA22A6BF1600260160 /* MyLivnCachManager.h */,
 				3BA6B8EB22A6BF1600260160 /* MyLivnCachManager.m */,
+				3B24DCE522A8EF080019322B /* Utilities.h */,
+				3B24DCE622A8EF080019322B /* Utilities.m */,
 			);
 			path = AvatarLib;
 			sourceTree = "<group>";
@@ -319,6 +324,7 @@
 				3B24DCDE22A8B7EE0019322B /* MyLivnDataOperation.m in Sources */,
 				3B24DCE422A8D1860019322B /* Reachability.m in Sources */,
 				3BA6B8EC22A6BF1600260160 /* MyLivnCachManager.m in Sources */,
+				3B24DCE722A8EF080019322B /* Utilities.m in Sources */,
 				3BA6B88022A1D0CA00260160 /* MyLivnImageLoader.m in Sources */,
 				3BA6B85822A1CA6D00260160 /* main.m in Sources */,
 				3BA6B84A22A1CA6C00260160 /* AppDelegate.m in Sources */,
